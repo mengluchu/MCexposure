@@ -2,7 +2,10 @@
 #' @param rasterlist list of rasters for comparision
 #' @param location used \code{\link[raster]{extract}} function, could be e.g. a dataframe with XY to extract locations for comparison.
 #' @example homemaker = raster("data/homemaker_allweek.tif"); rl = list(homemaker,commuter,AP_5m); location = read.csv("data/woon.csv", header = F); location = location[,-3]; names(location) = c("X","Y"); commuter = raster("data/commuter_allweek.tif");AP_5m = raster("data/AP_map_5m_Utrecht.tif");compare3methods(rl)
-#'devtools::use_package("raster")
+
+
+
+#use_package("lattice", "Suggests")
 require("ggplot2")
 require("lattice")
 require("GGally")
