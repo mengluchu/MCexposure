@@ -1,19 +1,20 @@
 #' Compare Extract location values from raster results and plot the scatterplot
 #' @param rasterlist list of rasters for comparision
 #' @param location used \code{\link[raster]{extract}} function, could be e.g. a dataframe with XY to extract locations for comparison.
-#' @example homemaker = raster("data/homemaker_allweek.tif"); rl = list(homemaker,commuter,AP_5m); location = read.csv("data/woon.csv", header = F); location = location[,-3]; names(location) = c("X","Y"); commuter = raster("data/commuter_allweek.tif");AP_5m = raster("data/AP_map_5m_Utrecht.tif");compare3methods(rl)
+#' @example
+#' homemaker = raster("data/homemaker_allweek.tif"); location = read.csv("data/woon.csv", header = F); location = location[,-3]; names(location) = c("X","Y"); commuter = raster("data/commuter_allweek.tif");AP_5m = raster("data/AP_map_5m_Utrecht.tif"); rl = list(homemaker,commuter,AP_5m); compare3methods(rl)
 #' @export
 
 
 #use_package("lattice", "Suggests")
-require("ggplot2")
-require("lattice")
-require("GGally")
-require(reshape2)
-require(raster)
+#require("ggplot2")
+#require("lattice")
+#require("GGally")
+#require(reshape2)
+#require(raster)
 
 
-compare3methods = function(rasterlist,location, varnames = c("Homemaker","Commuter", "Static"))
+scatter_compare_methods = function(rasterlist,location, varnames = c("Homemaker","Commuter", "Static"))
 {
 
 dfach= data.frame(lapply(rasterlist, extract, location))

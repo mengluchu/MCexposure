@@ -1,0 +1,98 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+
+- Never uses retina figures
+- Has a smaller default figure size
+- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+
+## Vignette Info
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+## Styles
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+```{r}
+library(MCexposure)
+require(ggplot2)
+require(lattice)
+require(GGally)
+require(reshape2)
+require(raster)
+ 
+require(gridExtra)
+require(ggthemes)
+require(cowplot)
+require(ggpubr)
+require(rasterVis)
+```
+
+Reproduce method comparison scatterplot figure using scatter_compare_method
+```{r, fig.show='hold'}
+
+data(homemaker)
+data(commuter)
+data(location)
+data(AP_5m)
+rl = list(homemaker,commuter,AP_5m); 
+scatter_compare_methods(rl, location)
+
+```
+
+reproduce transect figure using plottransec (middle and bottom figure), drawtrasectline(upper figure)
+```{r plottranset}
+
+
+ 
+tra_we= rbind(c(120000,456000), c(145000, 456000))
+tra_ns= rbind(c(135000,450000), c(135000, 470000))
+WEho=plottransec(homemaker, tra_we, tra_NS = tra_ns, "west-east")
+NSho = plottransec(homemaker, tra_we, tra_NS =tra_ns , "north-south")
+WEco = plottransec(commuter, tra_we, tra_NS = tra_ns, "west-east")
+NSco = plottransec(commuter, tra_we, tra_NS =tra_ns , "north-south")
+ho  = drawtransectline(homemaker, tra_we, tra_NS = tra_ns)
+co = drawtransectline(commuter, tra_we, tra_NS = tra_ns)
+tra_g= arrangeGrob(ho,co, WEho,NSho, WEco, NSco,  ncol = 4, nrow = 3, 
+             layout_matrix = rbind(c(1,2), c(1,2), c(3,5), c(3,5), c(4,6), c(4,6))) 
+  as_ggplot(tra_g)+draw_plot_label(label = c("Commuter","west-east transect ", "north-south transect","Homemaker","west-east transect ", "north-south transect"), size = 18,
+                  x = c(0.6, 0.55, 0.55,0.15, 0.09, 0.09 ), y = c( 0.98, 0.68, 0.33,0.98, 0.68, 0.33))
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))
