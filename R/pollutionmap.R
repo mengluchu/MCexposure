@@ -12,7 +12,7 @@ APmap = function(dir = "C:/Users/Lu000012/Documents/files/trajectory/NO2_Input/"
 #rownames(yearcoef) = NULL
 #write.csv(yearcoef,"C:/Users/Lu000012/Documents/files/trajectory/NO2_Input/yearcoef.csv",row.names = F)
 #library(raster)
-yearcoef = yearcoef[,c(-1,  -7,-8)]
+yearcoef = yearcoef[,c(-1,  -7,-8)] # from ivan's file, column 1,7,8 are ID, R2 and p-value, so removed
 yearcoefmean =  apply(yearcoef,2, mean)
 
 v1_hea_traf_load50= raster (paste(dir, "heavy_traf_load50_Utreht.tif", sep= ""))
