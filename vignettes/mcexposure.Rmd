@@ -43,6 +43,7 @@ require(ggthemes)
 require(cowplot)
 require(ggpubr)
 require(rasterVis)
+require(spatialEco)
 ```
 
 Reproduce method comparison scatterplot figure using scatter_compare_method
@@ -60,8 +61,6 @@ scatter_compare_methods(rl, location)
 reproduce transect figure using plottransec (middle and bottom figure), drawtrasectline(upper figure)
 ```{r plottranset}
 
-
- 
 tra_we= rbind(c(120000,456000), c(145000, 456000))
 tra_ns= rbind(c(135000,450000), c(135000, 470000))
 WEho=plottransec(homemaker, tra_we, tra_NS = tra_ns, "west-east")
@@ -74,6 +73,11 @@ tra_g= arrangeGrob(ho,co, WEho,NSho, WEco, NSco,  ncol = 4, nrow = 3,
              layout_matrix = rbind(c(1,2), c(1,2), c(3,5), c(3,5), c(4,6), c(4,6))) 
   as_ggplot(tra_g)+draw_plot_label(label = c("Commuter","west-east transect ", "north-south transect","Homemaker","west-east transect ", "north-south transect"), size = 18,
                   x = c(0.6, 0.55, 0.55,0.15, 0.09, 0.09 ), y = c( 0.98, 0.68, 0.33,0.98, 0.68, 0.33))
+```
+
+Stratified sampling
+```{r}
+stratified_sampling (homemaker, nrofcells=80, totalpoints=1020,result_name="sample_1000.csv")
 ```
 
 You can enable figure captions by `fig_caption: yes` in YAML:
